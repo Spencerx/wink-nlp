@@ -171,6 +171,14 @@ describe( 'APIs — A', function () {
         } );
       } );
 
+      it( '.map() iterator should go through each sentence', function () {
+        var result = doc1.sentences().map( ( s ) => s.out() );
+        expect( result ).to.deep.equal( as1 );
+
+        result = doc2.sentences().map( ( s ) => s.out() );
+        expect( result ).to.deep.equal( as2 );
+      } );
+
       it( '.itemAt() should return correct sentence item', function () {
         const i11 = doc1.sentences().itemAt( 0 );
         expect( i11.out() ).to.equal( as1[ 0 ] );
@@ -187,6 +195,15 @@ describe( 'APIs — A', function () {
         doc2.sentences().itemAt( 2 ).tokens().each( ( t, k ) => {
           expect( t.out() ).to.equal( d2s2t[ k ] );
         } );
+      } );
+
+      it( '.tokens().map() should return retlative token indexes — k', function () {
+        var result = doc1.sentences().itemAt( 2 ).tokens().map( ( t ) => t.out() );
+        console.log('🚀 ~ file: apiA-specs.js:202 ~ result:', result, d2s2t);
+        expect(result).to.deep.equal( d1s2t );
+
+        result = doc2.sentences().itemAt( 2 ).tokens().map( ( t ) => t.out() );
+        expect(result).to.deep.equal( d2s2t );
       } );
 
       it( 'sentence.entities() should sentence wise entities correctly', function () {
@@ -224,6 +241,14 @@ describe( 'APIs — A', function () {
           expect( e.out( its.detail ) ).to.deep.equal( ae2[ k ] );
         } );
       } );
+
+      it('.map() should return array of entities with their details', function () {
+        const result1 = doc1.entities().map((e) => e.out(its.detail));
+        expect(result1).to.deep.equal(ae1);
+
+        const result2 = doc2.entities().map((e) => e.out(its.detail));
+        expect(result2).to.deep.equal(ae2);
+      });
 
       it( '.itemAt() should return correct entity item', function () {
         const i11 = doc1.entities().itemAt( 5 );
@@ -283,6 +308,24 @@ describe( 'APIs — A', function () {
           expect( e.parentSentence().out() ).to.deep.equal( doc2.sentences().itemAt( es[ k ] ).out() );
         });
       } );
+
+      it('entities().map() --- sentence() should point correct sentence for each entity', function () {
+        // Maps entity's index to sentence's index.
+        const es = [ 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2 ];
+
+        const expectedSentencesForDoc1 = es.map((sentenceIdx) =>
+          doc1.sentences().itemAt(sentenceIdx).out()
+        );
+        const expectedSentencesForDoc2 = es.map((sentenceIdx) =>
+          doc2.sentences().itemAt(sentenceIdx).out()
+        );
+
+        const actualSentencesForDoc1 = doc1.entities().map((e) => e.parentSentence().out());
+        const actualSentencesForDoc2 = doc2.entities().map((e) => e.parentSentence().out());
+
+        expect(actualSentencesForDoc1).to.deep.equal(expectedSentencesForDoc1);
+        expect(actualSentencesForDoc2).to.deep.equal(expectedSentencesForDoc2);
+      });
     } ); // doc.entities() API
 
     describe( 'doc.tokens() API', function () {
@@ -366,6 +409,20 @@ describe( 'APIs — A', function () {
                 expect( t.out() ).to.equal( f2num[ k ] );
               } );
         } );
+
+        it('.map() should correctly map filtered numbers', function () {
+          const mappedF1 = doc1.tokens()
+            .filter((t) => t.out(its.type) === 'number')
+            .map((t) => t.out());
+
+          expect(mappedF1).to.deep.equal(f1num);
+
+          const mappedF2 = doc2.tokens()
+            .filter((t) => t.out(its.type) === 'number')
+            .map((t) => t.out());
+
+          expect(mappedF2).to.deep.equal(f2num);
+        });
 
         it( '.itemAt() should return correct item from filtered numebrs', function () {
           const i1 = doc1.tokens()

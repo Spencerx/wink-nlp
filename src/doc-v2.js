@@ -46,6 +46,9 @@ var selGetItemAt = require( './api/sel-get-item.js' );
 var colEach = require( './api/col-each.js' );
 var selEach = require( './api/sel-each.js' );
 
+var colMap = require( './api/col-map.js' );
+var selMap = require( './api/sel-map.js' );
+
 // **Filter** for collection & selection.
 var colFilter = require( './api/col-filter.js' );
 var selFilter = require( './api/sel-filter.js' );
@@ -185,6 +188,8 @@ var doc = function ( docData, addons ) {
     var api = Object.create( null );
     // Iterator.
     api.each = ( f ) => selEach( f, selectedTokens, itemToken );
+    // Map.
+    api.map = ( f ) => selMap( f, selectedTokens, itemToken );
     // Filter.
     api.filter = ( f ) => selFilter( f, selectedTokens, itemToken, colSelectedTokens );
     // Item at `k`th index. If `k` is outside valid range, return `undefined` like JS.
@@ -213,6 +218,8 @@ var doc = function ( docData, addons ) {
         var api = Object.create( null );
         // Iterator.
         api.each = ( f ) => colEach( f, start, end, itemToken );
+        // Map.
+        api.map = ( f ) => colMap( f, start, end, itemToken );
         // Filter.
         api.filter = ( f ) => colFilter( f, start, end, itemToken, colSelectedTokens );
         // Item at `k`th index. If `k` is outside valid range, return `undefined` like JS.
@@ -275,6 +282,8 @@ var doc = function ( docData, addons ) {
     var api = Object.create( null );
     // Iterator.
     api.each = ( f ) => selEach( f, selectedEntities, itemEntity );
+    // Map.
+    api.map = ( f ) => selMap( f, selectedEntities, itemEntity );
     // Filter.
     api.filter = ( f ) => selFilter( f, selectedEntities, itemEntity, colSelectedEntities );
     // Item at `k`th index. If `k` is outside valid range, return `undefined` like JS.
@@ -299,6 +308,8 @@ var doc = function ( docData, addons ) {
     var api = Object.create( null );
     // Iterator.
     api.each = ( f ) => colEach( f, 0, entities.length - 1, itemEntity );
+    // Map.
+    api.map = ( f ) => colMap( f, 0, entities.length - 1, itemEntity );
     // Filter.
     api.filter = ( f ) => colFilter( f, 0, entities.length - 1, itemEntity, colSelectedEntities );
     // Item at `k`th index. If `k` is outside valid range, return `undefined` like JS.
@@ -357,6 +368,8 @@ var doc = function ( docData, addons ) {
     var api = Object.create( null );
     // Iterator.
     api.each = ( f ) => selEach( f, selectedCustomEntities, itemCustomEntity );
+    // Map.
+    api.map = ( f ) => selMap( f, selectedCustomEntities, itemCustomEntity );
     // Filter.
     api.filter = ( f ) => selFilter( f, selectedCustomEntities, itemCustomEntity, colSelectedCustomEntities );
     // Item at `k`th index. If `k` is outside valid range, return `undefined` like JS.
@@ -381,6 +394,8 @@ var doc = function ( docData, addons ) {
     var api = Object.create( null );
     // Iterator.
     api.each = ( f ) => colEach( f, 0, customEntities.length - 1, itemCustomEntity );
+    // Map.
+    api.map = ( f ) => colMap( f, 0, customEntities.length - 1, itemCustomEntity );
     // Filter.
     api.filter = ( f ) => colFilter( f, 0, customEntities.length - 1, itemCustomEntity, colSelectedCustomEntities );
     // Item at `k`th index. If `k` is outside valid range, return `undefined` like JS.
@@ -438,6 +453,8 @@ var doc = function ( docData, addons ) {
     var api = Object.create( null );
     // Iterator.
     api.each = ( f ) => colEach( f, 0, sentences.length - 1, itemSentence );
+    // Map.
+    api.map = ( f ) => colMap( f, 0, sentences.length - 1, itemSentence );
     // Item at `k`th index. If `k` is outside valid range, return `undefined` like JS.
     api.itemAt = ( k ) => colGetItemAt( k, 0, ( sentences.length - 1 ), itemSentence );
     // Length of this collection.

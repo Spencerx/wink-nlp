@@ -227,6 +227,23 @@ describe( 'APIs — B', function () {
         }
       } ); // .each() method via .itmAt()
 
+      it('.map() method via .itemAt()', function () {
+        const mappedSentences = [];
+
+        for (let i = 0; i < docs.length; i += 1) {
+          const doc = docs[i];
+          const sentencesFromMap = doc.sentences().map((s, k) => {
+            expect(s.out()).to.deep.equal(doc.sentences().itemAt(k).out());
+            expect(s.out()).to.deep.equal(sentences[i][k]);
+            return s.out();
+          });
+
+          mappedSentences.push(sentencesFromMap);
+        }
+
+        expect(mappedSentences).to.deep.equal(sentences);
+      });
+
       it( '.length() method', function () {
         for ( let i = 0; i < docs.length; i += 1 ) {
           expect( docs[ i ].sentences().length() ).to.equal( sentences[ i ].length );
@@ -305,6 +322,15 @@ describe( 'APIs — B', function () {
         } // for
       } ); // .each() method
 
+      it('.map() method', function () {
+        for (let i = 0; i < docs.length; i += 1) {
+          const doc = docs[i];
+          const result = doc.entities().map((e) => (e ? e.out() : undefined));
+
+          expect(result).to.deep.equal([].concat([], ...entities[i]));
+        }
+      });
+
       it( '.filter() method', function () {
         expect( docs[ 0 ].entities().filter( dates ).out() ).to.deep.equal( d0[ DATE ] );
         expect( docs[ 0 ].entities().filter( cardinals ).out() ).to.deep.equal( d0[ CARDINAL ] );
@@ -347,6 +373,11 @@ describe( 'APIs — B', function () {
           expect( e.out() ).to.equal( d0[ CARDINAL ][ k ] );
         } );
       } ); // .each() method
+
+      it('.map() method', function () {
+        const result = selOfCardinals.map((e) => e.out());
+        expect(result).to.deep.equal(d0[CARDINAL]);
+      });
 
       it( '.filter() method', function () {
         expect( selOfCardinals.filter( ( e ) => ( e.out() === d0[ CARDINAL ][ 0 ] ) ).out() ).to.deep.equal( d0[ CARDINAL ].slice( 0, 1 ) );
@@ -419,6 +450,15 @@ describe( 'APIs — B', function () {
           } );
         } // for
       } ); // .each() method
+
+      it('.map() method', function () {
+        for (let i = 0; i < docs.length; i += 1) {
+          const doc = docs[i];
+          const result = doc.customEntities().map((e) => (e ? e.out() : undefined));
+
+          expect(result).to.deep.equal([].concat([], ...customEntities[i]));
+        }
+      });
 
       it( '.filter() method', function () {
         expect( docs[ 0 ].customEntities().filter( fighters ).out() ).to.deep.equal( d0ce.fighters );
@@ -535,6 +575,15 @@ describe( 'APIs — B', function () {
         } // for
       } ); // .each() method
 
+      it('.map() method', function () {
+        for (let i = 0; i < docs.length; i += 1) {
+          const doc = docs[i];
+          const result = doc.tokens().map((t) => (t ? t.out() : undefined));
+
+          expect(result).to.deep.equal([].concat([], ...tokens[i]));
+        }
+      });
+
       it( '.filter() method', function () {
         expect( docs[ 0 ].tokens().filter( words ).out() ).to.deep.equal( d0words );
         expect( docs[ 1 ].tokens().filter( words ).out() ).to.deep.equal( d1words );
@@ -582,6 +631,14 @@ describe( 'APIs — B', function () {
           expect( e.out() ).to.equal( d1words[ k ] );
         } );
       } ); // .each() method
+
+      it('.map() method', function () {
+        const result0 = selOfWords0.map((e) => e.out());
+        const result1 = selOfWords1.map((e) => e.out());
+
+        expect(result0).to.deep.equal(d0words);
+        expect(result1).to.deep.equal(d1words);
+      });
 
       it( '.filter() method', function () {
         expect( selOfWords0.filter( ( t ) => ( t.out().length < 3 ) ).out() ).to.deep.equal( [ 'by', 'is', 'by' ] );
