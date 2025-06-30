@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "word-vectors" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "word-vectors" ]
+    branches: [ "master" ]
 
 jobs:
   build:

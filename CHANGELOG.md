@@ -2,7 +2,7 @@
 ## Version 2.4.0 June 30, 2025
 
 ### ✨ Features
-- Now map tokens easily; for example: `doc.tokens().map(token => ({token: token.out(), pos: token.out(its.pos)}))`. Thanks to @snowyu effort! 👏
+- Now map tokens easily; for example: `doc.tokens().map(token => ({token: token.out(), pos: token.out(its.pos)}))`. Thanks to [@snowyu](https://github.com/snowyu) effort! 👏
 # [Operational update](https://github.com/winkjs/wink-nlp/releases/tag/2.3.2)
 ## Version 2.3.2 November 30, 2024
 
