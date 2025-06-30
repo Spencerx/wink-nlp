@@ -503,6 +503,11 @@ describe( 'APIs — B', function () {
         } );
       } ); // .each() method
 
+      it( '.map() method', function () {
+        const result = selOfFighters.map( ( e ) => e.out());
+        expect( result ).to.deep.equal( d0ce.fighters );
+      } ); // .each() method
+
       it( '.filter() method', function () {
         expect( selOfFighters.filter( ( e ) => ( e.out() === d0ce.fighters[ 0 ] ) ).out() ).to.deep.equal( d0ce.fighters.slice( 0, 1 ) );
       } ); // .filter() method
